@@ -1,0 +1,64 @@
+services:
+  db:
+    image: mysql:8.1.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: 'modqueue'
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+
+  content-api-nginx:
+    image: nginx:stable
+    container_name: content-api-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./content-api:/var/www/html
+      - ./content-api/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - content-api-php
+
+  content-api-php:
+    build:
+      context: ./content-api
+    container_name: content-api-php
+    volumes:
+      - ./content-api:/var/www/html
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+
+  moderation-worker:
+    build:
+      context: ./moderation-worker
+    container_name: moderation-worker
+    volumes:
+      - ./moderation-worker:/var/www/html
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+
+volumes:
+  db_data:
