@@ -25,9 +25,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
+            "ModWorker\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "App\\Jobs\\": "Jobs/"
         }
     },
     "autoload-dev": {
