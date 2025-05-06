@@ -4,6 +4,8 @@ namespace App\Jobs;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use ModWorker\Actions\StoreModerationLog;
+use ModWorker\Factories\ModerationStrategyFactory;
 
 class ModerateContentJob implements ShouldQueue
 {
@@ -13,8 +15,12 @@ class ModerateContentJob implements ShouldQueue
     {
     }
 
-    public function handle(): void
+    public function handle(
+        StoreModerationLog $storeModerationLog,
+    ): void
     {
-        dump($this->data);
+        $moderationService = ModerationStrategyFactory::make();
+        $inappropriate = $moderationService->isInappropriate($this->data['body']);
+        $storeModerationLog->handle($this->data['id'], null, $inappropriate);
     }
 }

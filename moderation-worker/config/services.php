@@ -35,4 +35,7 @@ return [
         ],
     ],
 
+    'purgomalum' => [
+        'url' => env('PURGOMALUM_URL', 'https://www.purgomalum.com/service/containsprofanity'),
+    ],
 ];
