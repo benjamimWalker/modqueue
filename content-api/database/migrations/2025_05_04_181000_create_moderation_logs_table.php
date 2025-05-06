@@ -14,7 +14,7 @@ return new class extends Migration {
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->enum('action', ['approved', 'rejected']);
-            $table->string('moderator_note');
+            $table->string('moderator_note')->nullable();
             $table->timestamps();
         });
     }
