@@ -1,4 +1,7 @@
 <?php
+
+use App\Jobs\ModerateContentJob;
+
 CONST endpoint = 'api/content';
 
 it('creates content with valid title and body', function () {
@@ -69,3 +72,20 @@ it('fails if body is not a string', function () {
     $response->assertJsonValidationErrors(['body']);
 });
 
+it('dispatches ModerateContentJob after content creation', function () {
+    Queue::fake();
+
+    $payload = [
+        'title' => 'Moderation test',
+        'body' => 'Some possibly inappropriate text',
+    ];
+
+    $response = $this->postJson(endpoint, $payload);
+
+    $response->assertCreated();
+
+    Queue::assertPushed(ModerateContentJob::class, function (object $job) use ($payload) {
+        return $job->data['title'] === $payload['title']
+            && $job->data['body'] === $payload['body'];
+    });
+});
