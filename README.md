@@ -102,5 +102,5 @@ The main features of the application are:
 - Clean, maintainable Laravel 11 code with proper architecture.
 
 Made with ❤️ and Laravel.
-[Benjamim] - [benjamim.sousa@gmail.com]
+[Benjamim] - [benjamim.sousamelo@gmail.com]
 Github: [@benjamimWalker](https://github.com/benjamimWalker)
