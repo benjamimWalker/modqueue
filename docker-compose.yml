@@ -21,12 +21,6 @@ services:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
 
-  redis:
-    image: redis:alpine
-    restart: always
-    ports:
-      - "6379:6379"
-
   content-api-nginx:
     image: nginx:stable
     container_name: content-api-nginx
