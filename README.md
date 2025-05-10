@@ -18,6 +18,7 @@ Key Technologies used:
 
 * Laravel 12 (for both services)
 * MySQL
+* Nginx
 * RabbitMQ
 * Docker + Docker Compose
 * PestPHP
@@ -98,9 +99,8 @@ docker compose exec moderation-worker php artisan queue:work
 The main features of the application are:
 - Real-time queue-based communication using Laravel Jobs + RabbitMQ.
 - Microservice-style separation between content handling and moderation logic.
-- Full test coverage with PestPHP, including.
-- Clean, maintainable Laravel 11 code with proper architecture.
+- Full test coverage with PestPHP.
+- Clean, maintainable Laravel 12 code with proper architecture.
 
-Made with ❤️ and Laravel.
 [Benjamim] - [benjamim.sousamelo@gmail.com]
 Github: [@benjamimWalker](https://github.com/benjamimWalker)
